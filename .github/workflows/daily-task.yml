@@ -3,7 +3,7 @@ name: Run Python Script Daily
 on:
   schedule:
     - cron: '0 16 * * *'  # Runs daily at 16:00 UTC
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   run-script:
@@ -17,5 +17,21 @@ jobs:
         with:
           python-version: 3.9
 
+      - name: Install Dependencies
+        run: pip install -r requirements.txt || echo "No requirements file"
+
       - name: Run Python Script
         run: python update_number.py
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add number.txt
+          git commit -m "Automated update of number.txt"
+          git push
