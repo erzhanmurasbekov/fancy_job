@@ -1,8 +1,8 @@
-name: Daily Python Script
+name: Run Python Script Daily
 
 on:
   schedule:
-    - cron: '0 16 * * *'  # Runs daily at midnight UTC
+    - cron: '0 16 * * *'  # Runs daily at 16:00 UTC
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
@@ -15,10 +15,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.12
+          python-version: 3.9
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt || true
+        run: |
+          pip install -r requirements.txt || echo "No requirements file found."
 
       - name: Run Python Script
         run: python update_number.py
