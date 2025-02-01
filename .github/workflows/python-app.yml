@@ -17,8 +17,5 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Install Dependencies
-        run: pip install -r requirements.txt || true
-
       - name: Run Python Script
         run: python update_number.py
