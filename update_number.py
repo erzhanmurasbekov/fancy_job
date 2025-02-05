@@ -12,6 +12,8 @@ def read_number():
     with open("number.txt", "r") as f:
         return int(f.read().strip())
 
+def git_pull():
+    subprocess.run(["git", "pull"])
 
 def write_number(num):
     with open("number.txt", "w") as f:
@@ -110,6 +112,7 @@ def update_cron_with_random_time():
 
 def main():
     try:
+        git_pull()
         current_number = read_number()
         new_number = current_number + 1
         write_number(new_number)
